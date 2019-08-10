@@ -1,0 +1,30 @@
+{
+  "name": "svelte-emoji-picker",
+  "svelte": "src/index.svelte",
+  "module": "index.mjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "rollup": "^1.11.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-svelte": "^5.0.0",
+    "svelte": "^3.0.0"
+  },
+  "keywords": [
+    "svelte"
+  ],
+  "files": [
+    "src",
+    "index.mjs",
+    "index.js"
+  ],
+  "dependencies": {
+    "@fortawesome/free-regular-svg-icons": "^5.10.1",
+    "@fortawesome/free-solid-svg-icons": "^5.10.1",
+    "fa-svelte": "^3.0.0",
+    "popper.js": "^1.15.0"
+  }
+}
