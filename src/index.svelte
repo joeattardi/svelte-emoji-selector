@@ -1,9 +1,11 @@
 <script>
   import { onMount } from 'svelte';
 
-  import { faSmile } from '@fortawesome/free-regular-svg-icons/faSmile';
+  import { faSmile } from '@fortawesome/free-regular-svg-icons';
   import Icon from 'fa-svelte';
   import Popper from 'popper.js';
+
+  import ClickOutside from 'svelte-click-outside';
 
   const smileIcon = faSmile;
 
@@ -25,6 +27,10 @@
     if (!buttonParent && !pickerParent) {
       pickerVisible = false;
     }
+  }
+
+  function hidePicker() {
+    pickerVisible = false;
   }
 
   function togglePicker() {
@@ -49,13 +55,13 @@
   }
 </style>
 
-<svelte:body on:click={onClickOutside} />
-
 <button class="emoji-picker__trigger" bind:this={triggerButtonEl} on:click={togglePicker}>
   <Icon icon={smileIcon} />
 </button>
 
-<div class="emoji-picker" bind:this={pickerEl} hidden={!pickerVisible}>
-  Emoji Picker
-  <span>click me</span>
-</div>
+<ClickOutside on:clickoutside={hidePicker} exclude={[triggerButtonEl]}>
+  <div class="emoji-picker" bind:this={pickerEl} hidden={!pickerVisible}>
+    Emoji Picker
+    <span>click me</span>
+  </div>
+</ClickOutside>
