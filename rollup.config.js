@@ -1,3 +1,4 @@
+import json from 'rollup-plugin-json';
 import svelte from 'rollup-plugin-svelte';
 import resolve from 'rollup-plugin-node-resolve';
 import pkg from './package.json';
@@ -15,6 +16,9 @@ export default {
 	],
 	plugins: [
 		svelte(),
-		resolve()
+		resolve(),
+		json({
+			include: 'src/data/emoji.json'
+		})
 	]
 };

@@ -1,11 +1,15 @@
 <script>
   import { onMount } from 'svelte';
 
-  import { faSmile } from '@fortawesome/free-regular-svg-icons';
+  import { faBuilding, faFlag, faLightbulb, faSmile } from '@fortawesome/free-regular-svg-icons';
+  import { faCat, faCoffee, faFutbol, faMusic } from '@fortawesome/free-solid-svg-icons';
   import Icon from 'fa-svelte';
   import Popper from 'popper.js';
 
   import ClickOutside from 'svelte-click-outside';
+  import { Tabs, Tab, TabList, TabPanel } from 'svelte-tabs';
+
+  import emojiData from './data/emoji.json';
 
   const smileIcon = faSmile;
 
@@ -19,6 +23,28 @@
       placement: 'right'
     });
   });
+
+  const categoryOrder = [
+    'Smileys & People',
+    'Animals & Nature',
+    'Food & Drink',
+    'Activities',
+    'Travel & Places',
+    'Objects',
+    'Symbols',
+    'Flags'
+  ];
+
+  const categoryIcons = {
+    'Smileys & People': faSmile,
+    'Animals & Nature': faCat,
+    'Food & Drink': faCoffee,
+    'Activities': faFutbol,
+    'Travel & Places': faBuilding,
+    'Objects': faLightbulb,
+    'Symbols': faMusic,
+    'Flags': faFlag
+  };
 
   function onClickOutside(event) {
     const buttonParent = event.target.closest('.emoji-picker__trigger');
@@ -44,7 +70,9 @@
 
 <style>
   .emoji-picker {
-    background: #AAAAAA;
+    background: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
     width: 20em;
     padding: 0.5em;
     margin: 0 0.5em;
@@ -61,7 +89,18 @@
 
 <ClickOutside on:clickoutside={hidePicker} exclude={[triggerButtonEl]}>
   <div class="emoji-picker" bind:this={pickerEl} hidden={!pickerVisible}>
-    Emoji Picker
-    <span>click me</span>
+    <Tabs> 
+      <TabList>
+        {#each categoryOrder as category}
+          <Tab><Icon icon={categoryIcons[category]} /></Tab>
+        {/each}
+      </TabList>
+
+      {#each categoryOrder as category}
+        <TabPanel>
+          {category}
+        </TabPanel>
+      {/each}
+    </Tabs>
   </div>
 </ClickOutside>

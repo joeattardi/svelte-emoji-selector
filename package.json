@@ -9,7 +9,9 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
+    "emoji-datasource": "^4.1.0",
     "rollup": "^1.11.0",
+    "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-svelte": "^5.0.0",
     "svelte": "^3.0.0"
@@ -27,6 +29,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "fa-svelte": "^3.0.0",
     "popper.js": "^1.15.0",
-    "svelte-click-outside": "^1.0.0"
+    "svelte-click-outside": "^1.0.0",
+    "svelte-tabs": "^1.0.0"
   }
 }
