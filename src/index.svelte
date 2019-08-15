@@ -9,6 +9,8 @@
   import ClickOutside from 'svelte-click-outside';
   import { Tabs, Tab, TabList, TabPanel } from 'svelte-tabs';
 
+  import EmojiCategory from './EmojiCategory.svelte';
+
   import emojiData from './data/emoji.json';
 
   const smileIcon = faSmile;
@@ -22,6 +24,16 @@
     popper = new Popper(triggerButtonEl, pickerEl, {
       placement: 'right'
     });
+  });
+
+  const emojiCategories = {};
+  emojiData.forEach(emoji => {
+    let categoryList = emojiCategories[emoji.category];
+    if (!categoryList) {
+      categoryList = emojiCategories[emoji.category] = [];
+    }
+
+    categoryList.push(emoji);
   });
 
   const categoryOrder = [
@@ -98,7 +110,7 @@
 
       {#each categoryOrder as category}
         <TabPanel>
-          {category}
+          <EmojiCategory name={category} />
         </TabPanel>
       {/each}
     </Tabs>
