@@ -9,7 +9,7 @@
   import ClickOutside from 'svelte-click-outside';
   import { Tabs, Tab, TabList, TabPanel } from 'svelte-tabs';
 
-  import EmojiCategory from './EmojiCategory.svelte';
+  import EmojiList from './EmojiList.svelte';
 
   import emojiData from './data/emoji.js';
 
@@ -112,7 +112,7 @@
 
       {#each categoryOrder as category}
         <TabPanel>
-          <EmojiCategory name={category} emojis={emojiCategories[category]} />
+          <EmojiList name={category} emojis={emojiCategories[category]} />
         </TabPanel>
       {/each}
     </Tabs>

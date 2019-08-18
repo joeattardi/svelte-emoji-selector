@@ -12,7 +12,7 @@
     color: #333333;
   }
 
-  .category {
+  .emoji-list {
     height: 10em;
     overflow: scroll;
   }
@@ -20,7 +20,7 @@
 
 <h3>{name}</h3>
 
-<div class="category">
+<div class="emoji-list">
   {#each emojis as emoji}
     <Emoji emoji={emoji} />
   {/each}
