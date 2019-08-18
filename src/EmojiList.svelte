@@ -12,7 +12,7 @@
     color: #333333;
   }
 
-  .emoji-list {
+  .svelte-emoji-picker__emoji-list {
     height: 10em;
     overflow: scroll;
   }
@@ -20,8 +20,8 @@
 
 <h3>{name}</h3>
 
-<div class="emoji-list">
+<div class="svelte-emoji-picker__emoji-list">
   {#each emojis as emoji}
-    <Emoji emoji={emoji} />
+    <Emoji emoji={emoji} on:emojihover/>
   {/each}
 </div>

@@ -1,5 +1,17 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
+
   export let emoji;
+  
+  const dispatch = createEventDispatcher();
+
+  function onMouseOver() {
+    dispatch('emojihover', emoji);
+  }
+
+  function onMouseOut() {
+    dispatch('emojihover', null);
+  }
 </script>
 
 <style>
@@ -20,4 +32,4 @@
   }
 </style>
 
-<button>{emoji.emoji}</button>
+<button on:mouseover={onMouseOver} on:mouseout={onMouseOut}>{emoji.emoji}</button>

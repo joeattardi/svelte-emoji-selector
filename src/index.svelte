@@ -9,6 +9,7 @@
   import ClickOutside from 'svelte-click-outside';
   import { Tabs, Tab, TabList, TabPanel } from 'svelte-tabs';
 
+  import EmojiDetail from './EmojiDetail.svelte';
   import EmojiList from './EmojiList.svelte';
 
   import emojiData from './data/emoji.js';
@@ -17,8 +18,11 @@
 
   let triggerButtonEl;
   let pickerEl;
-  let pickerVisible = false;
   let popper;
+
+  let pickerVisible = false;
+
+  let currentEmoji;
 
   onMount(() => {
     popper = new Popper(triggerButtonEl, pickerEl, {
@@ -80,41 +84,61 @@
       popper.update();
     }
   }
+
+  function showEmojiDetails(event) {
+    currentEmoji = event.detail;
+  }
 </script>
 
 <style>
-  .emoji-picker {
+  .svelte-emoji-picker {
     background: #FFFFFF;
     border: 1px solid #CCCCCC;
     border-radius: 5px;
-    width: 20em;
-    padding: 0.5em;
+    width: 22rem;
     margin: 0 0.5em;
+    box-shadow: 0px 0px 3px 1px #CCCCCC;
   }
 
-  .emoji-picker__trigger {
+  .svelte-emoji-picker__trigger {
     cursor: pointer;
+  }
+
+  .svelte-emoji-picker__emoji-tabs {
+    padding: 0.25em;
+  }
+
+  :global(.svelte-emoji-picker__emoji-tabs .svelte-tabs ul.svelte-tabs__tab-list) {
+    display: flex;
+  }
+
+  :global(.svelte-emoji-picker__emoji-tabs .svelte-tabs li.svelte-tabs__tab) {
+    flex-grow: 1;
   }
 </style>
 
-<button class="emoji-picker__trigger" bind:this={triggerButtonEl} on:click={togglePicker}>
+<button class="svelte-emoji-picker__trigger" bind:this={triggerButtonEl} on:click={togglePicker}>
   <Icon icon={smileIcon} />
 </button>
 
 <ClickOutside on:clickoutside={hidePicker} exclude={[triggerButtonEl]}>
-  <div class="emoji-picker" bind:this={pickerEl} hidden={!pickerVisible}>
-    <Tabs> 
-      <TabList>
-        {#each categoryOrder as category}
-          <Tab><Icon icon={categoryIcons[category]} /></Tab>
-        {/each}
-      </TabList>
+  <div class="svelte-emoji-picker" bind:this={pickerEl} hidden={!pickerVisible}>
+    <div class="svelte-emoji-picker__emoji-tabs">
+      <Tabs> 
+        <TabList>
+          {#each categoryOrder as category}
+            <Tab><Icon icon={categoryIcons[category]} /></Tab>
+          {/each}
+        </TabList>
 
-      {#each categoryOrder as category}
-        <TabPanel>
-          <EmojiList name={category} emojis={emojiCategories[category]} />
-        </TabPanel>
-      {/each}
-    </Tabs>
+        {#each categoryOrder as category}
+          <TabPanel>
+            <EmojiList name={category} emojis={emojiCategories[category]} on:emojihover={showEmojiDetails} />
+          </TabPanel>
+        {/each}
+      </Tabs>
+    </div>
+
+    <EmojiDetail emoji={currentEmoji} />
   </div>
 </ClickOutside>
