@@ -36,6 +36,8 @@
     categoryList.push(emoji);
   });
 
+  console.log(emojiCategories);
+
   const categoryOrder = [
     'Smileys & People',
     'Animals & Nature',
@@ -110,7 +112,7 @@
 
       {#each categoryOrder as category}
         <TabPanel>
-          <EmojiCategory name={category} />
+          <EmojiCategory name={category} emojis={emojiCategories[category]} />
         </TabPanel>
       {/each}
     </Tabs>
