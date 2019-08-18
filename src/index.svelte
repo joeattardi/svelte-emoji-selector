@@ -11,7 +11,7 @@
 
   import EmojiCategory from './EmojiCategory.svelte';
 
-  import emojiData from './data/emoji.json';
+  import emojiData from './data/emoji.js';
 
   const smileIcon = faSmile;
 

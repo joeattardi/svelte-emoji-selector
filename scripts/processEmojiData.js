@@ -32,4 +32,4 @@ const newEmojiData = rawData.map(emojiItem => {
   return newData;
 });
 
-writeFileSync('src/data/emoji.json', JSON.stringify(newEmojiData));
+writeFileSync('src/data/emoji.js', `export default ${JSON.stringify(newEmojiData)};`);

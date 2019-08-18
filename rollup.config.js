@@ -16,9 +16,6 @@ export default {
 	],
 	plugins: [
 		svelte(),
-		resolve(),
-		json({
-			include: 'src/data/emoji.json'
-		})
+		resolve()
 	]
 };

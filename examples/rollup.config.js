@@ -26,10 +26,6 @@ export default {
 			}
 		}),
 
-		json({
-			include: '../src/data/emoji.json'
-		}),
-
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
 		// some cases you'll need additional configuration —
