@@ -22,6 +22,6 @@
 
 <div class="svelte-emoji-picker__emoji-list">
   {#each emojis as emoji}
-    <Emoji emoji={emoji} on:emojihover/>
+    <Emoji emoji={emoji} on:emojihover on:emojiclick />
   {/each}
 </div>

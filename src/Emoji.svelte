@@ -5,6 +5,10 @@
   
   const dispatch = createEventDispatcher();
 
+  function onClick() {
+    dispatch('emojiclick', emoji.emoji);
+  }
+
   function onMouseOver() {
     dispatch('emojihover', emoji);
   }
@@ -32,4 +36,4 @@
   }
 </style>
 
-<button on:mouseover={onMouseOver} on:mouseout={onMouseOut}>{emoji.emoji}</button>
+<button on:mouseover={onMouseOver} on:mouseout={onMouseOut} on:click={onClick}>{emoji.emoji}</button>

@@ -133,7 +133,7 @@
 
         {#each categoryOrder as category}
           <TabPanel>
-            <EmojiList name={category} emojis={emojiCategories[category]} on:emojihover={showEmojiDetails} />
+            <EmojiList name={category} emojis={emojiCategories[category]} on:emojihover={showEmojiDetails} on:emojiclick />
           </TabPanel>
         {/each}
       </Tabs>
