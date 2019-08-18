@@ -3,7 +3,14 @@
   "svelte": "src/index.svelte",
   "module": "index.mjs",
   "main": "index.js",
+  "license": "MIT",
   "version": "1.0.0",
+  "author": "Joe Attardi <jattardi@gmail.com> (https://joeattardi.codes)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joeattardi/svelte-emoji-picker.git"
+  },
+  "bugs": "https://github.com/joeattardi/svelte-emoji-picker/issues",
   "scripts": {
     "build": "rollup -c",
     "build:watch": "rollup -cw",
@@ -17,7 +24,8 @@
     "svelte": "^3.0.0"
   },
   "keywords": [
-    "svelte"
+    "svelte",
+    "emoji"
   ],
   "files": [
     "src",
