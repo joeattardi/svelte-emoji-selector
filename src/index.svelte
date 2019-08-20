@@ -11,6 +11,7 @@
 
   import EmojiDetail from './EmojiDetail.svelte';
   import EmojiList from './EmojiList.svelte';
+  import EmojiSearch from './EmojiSearch.svelte';
 
   import emojiData from './data/emoji.js';
 
@@ -123,6 +124,7 @@
 {#if pickerVisible}
   <ClickOutside on:clickoutside={hidePicker} exclude={[triggerButtonEl]}>
     <div class="svelte-emoji-picker" bind:this={pickerEl}>
+      <EmojiSearch />
       <div class="svelte-emoji-picker__emoji-tabs">
         <Tabs> 
           <TabList>
