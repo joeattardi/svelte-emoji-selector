@@ -10,6 +10,14 @@
 	<link rel='stylesheet' href='global.css'>
 	<link rel='stylesheet' href='bundle.css'>
 
+	<script>if (this.customElements) try { customElements.define('built-in', document.createElement('p').constructor, { 'extends': 'p' }) } catch (a) { document.write('<script src="https://unpkg.com/@ungap/custom-elements-builtin@0.2.7/min.js" crossorigin="anonymous" ><' + '/script>') } else document.write('<script src="https://unpkg.com/document-register-element@1.13.2/build/document-register-element.js" crossorigin="anonymous" ><' + '/script>');</script>
+
+	<!-- On IE11, typeof HTMLElement === 'object',
+			this breaks babel 7/TS compilation of built in extension
+			Adding an adapter to add an intermediate constructor wrapping native HTMLElement to fix this issue
+	-->
+	<script>if (typeof HTMLElement === 'object') document.write('<script src="https://unpkg.com/custom-elements-es5-adapter@@1.0.0/custom-elements-es5-adapter.js" crossorigin="anonymous"><' + '/script>')</script>
+
 	<script defer src='bundle.js'></script>
 </head>
 
