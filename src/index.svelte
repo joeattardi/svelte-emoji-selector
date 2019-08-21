@@ -87,6 +87,12 @@
     }
   }
 
+  function onKeyDown(event) {
+    if (event.key === 'Escape') {
+      hidePicker();
+    }
+  }
+
   function showEmojiDetails(event) {
     currentEmoji = event.detail;
   }
@@ -121,13 +127,15 @@
   }
 </style>
 
+<svelte:body on:keydown={onKeyDown} />
+
 <button class="svelte-emoji-picker__trigger" bind:this={triggerButtonEl} on:click={togglePicker}>
   <Icon icon={smileIcon} />
 </button>
 
 {#if pickerVisible}
   <ClickOutside on:clickoutside={hidePicker} exclude={[triggerButtonEl]}>
-    <div class="svelte-emoji-picker" bind:this={pickerEl}>
+    <div class="svelte-emoji-picker" bind:this={pickerEl} on:keydown={onKeyDown}>
       <EmojiSearch bind:searchText={searchText} />
       {#if searchText}
         <EmojiSearchResults searchText={searchText} on:emojihover={showEmojiDetails} on:emojiclick />
