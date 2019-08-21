@@ -2,7 +2,7 @@
   import { createEventDispatcher, onMount, tick } from 'svelte';
 
   import { faBuilding, faFlag, faLightbulb, faSmile } from '@fortawesome/free-regular-svg-icons';
-  import { faCat, faCoffee, faFutbol, faMusic } from '@fortawesome/free-solid-svg-icons';
+  import { faCat, faCoffee, faFutbol, faHistory, faMusic } from '@fortawesome/free-solid-svg-icons';
   import Icon from 'fa-svelte';
   import Popper from 'popper.js';
 
@@ -19,6 +19,9 @@
 
   const smileIcon = faSmile;
 
+  export let maxRecents = 50;
+  export let autoClose = true;
+
   let triggerButtonEl;
   let pickerEl;
   let popper;
@@ -29,6 +32,7 @@
   let variants;
   let currentEmoji;
   let searchText;
+  let recentEmojis = JSON.parse(localStorage.getItem('svelte-emoji-picker-recent')) || [];
 
   const dispatch = createEventDispatcher();
 
@@ -68,6 +72,7 @@
 
   function hidePicker(event) {
     pickerVisible = false;
+    searchText = '';
     popper.destroy();
   }
 
@@ -80,6 +85,7 @@
         placement: 'right'
       });
     } else {
+      searchText = '';
       popper.destroy();
     }
   }
@@ -100,14 +106,27 @@
       variantsVisible = true;
     } else {
       dispatch('emoji', event.detail.emoji);
-      hidePicker();
+      saveRecent(event.detail);
+
+      if (autoClose) {
+        hidePicker();
+      }
     }
   }
 
   function onVariantClick(event) {
     dispatch('emoji', event.detail.emoji);
+    saveRecent(event.detail);
     hideVariants();
-    hidePicker();
+
+    if (autoClose) {
+      hidePicker();
+    }
+  }
+
+  function saveRecent(emoji) {
+    recentEmojis = [emoji, ...recentEmojis.filter(recent => recent.key !== emoji.key)].slice(0, maxRecents);
+    localStorage.setItem('svelte-emoji-picker-recent', JSON.stringify(recentEmojis));
   }
 
   function hideVariants() {
@@ -126,7 +145,7 @@
     background: #FFFFFF;
     border: 1px solid #CCCCCC;
     border-radius: 5px;
-    width: 22rem;
+    width: 23rem;
     height: 21rem;
     margin: 0 0.5em;
     box-shadow: 0px 0px 3px 1px #CCCCCC;
@@ -164,12 +183,17 @@
         <EmojiSearchResults searchText={searchText} on:emojihover={showEmojiDetails} on:emojiclick={onEmojiClick} />
       {:else}
         <div class="svelte-emoji-picker__emoji-tabs">
-          <Tabs> 
+          <Tabs initialSelectedIndex={1}> 
             <TabList>
+              <Tab><Icon icon={faHistory} /></Tab>
               {#each categoryOrder as category}
                 <Tab><Icon icon={categoryIcons[category]} /></Tab>
               {/each}
             </TabList>
+
+            <TabPanel>
+              <EmojiList name="Recently Used" emojis={recentEmojis} on:emojihover={showEmojiDetails} on:emojiclick={onEmojiClick} />
+            </TabPanel>
 
             {#each categoryOrder as category}
               <TabPanel>

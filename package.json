@@ -39,6 +39,6 @@
     "fa-svelte": "^3.0.0",
     "popper.js": "^1.15.0",
     "svelte-click-outside": "^1.0.0",
-    "svelte-tabs": "^1.0.1"
+    "svelte-tabs": "^1.1.0"
   }
 }
