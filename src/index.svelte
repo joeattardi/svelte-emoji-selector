@@ -200,10 +200,10 @@
             {/each}
           </Tabs>
         </div>
+      {/if}
 
-        {#if variantsVisible}
-          <VariantPopup variants={variants} on:emojiclick={onVariantClick} on:close={hideVariants} />
-        {/if}
+      {#if variantsVisible}
+        <VariantPopup variants={variants} on:emojiclick={onVariantClick} on:close={hideVariants} />
       {/if}
 
       <EmojiDetail emoji={currentEmoji} />
