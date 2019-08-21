@@ -8,8 +8,8 @@
     padding: 0.25em;
     font-size: 0.8em;
     font-weight: bold;
-    height: 2em;
-    line-height: 2em;
+    height: 3em;
+    line-height: 3em;
     text-align: center;
   }
 </style>

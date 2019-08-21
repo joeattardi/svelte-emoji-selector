@@ -104,7 +104,7 @@
     border: 1px solid #CCCCCC;
     border-radius: 5px;
     width: 22rem;
-    height: 20rem;
+    height: 21rem;
     margin: 0 0.5em;
     box-shadow: 0px 0px 3px 1px #CCCCCC;
   }
