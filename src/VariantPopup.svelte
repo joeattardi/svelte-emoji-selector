@@ -25,8 +25,8 @@
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.5);
-    width: 22em;
-    height: 21em;
+    width: 23rem;
+    height: 21rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
