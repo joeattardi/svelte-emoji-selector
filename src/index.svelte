@@ -12,6 +12,7 @@
   import EmojiDetail from './EmojiDetail.svelte';
   import EmojiList from './EmojiList.svelte';
   import EmojiSearch from './EmojiSearch.svelte';
+  import EmojiSearchResults from './EmojiSearchResults.svelte';
 
   import emojiData from './data/emoji.js';
 
@@ -24,6 +25,7 @@
   let pickerVisible = false;
 
   let currentEmoji;
+  let searchText;
 
   const emojiCategories = {};
   emojiData.forEach(emoji => {
@@ -96,6 +98,7 @@
     border: 1px solid #CCCCCC;
     border-radius: 5px;
     width: 22rem;
+    height: 20rem;
     margin: 0 0.5em;
     box-shadow: 0px 0px 3px 1px #CCCCCC;
   }
@@ -106,6 +109,7 @@
 
   .svelte-emoji-picker__emoji-tabs {
     padding: 0.25em;
+    height: 15rem;
   }
 
   :global(.svelte-emoji-picker__emoji-tabs .svelte-tabs ul.svelte-tabs__tab-list) {
@@ -124,22 +128,26 @@
 {#if pickerVisible}
   <ClickOutside on:clickoutside={hidePicker} exclude={[triggerButtonEl]}>
     <div class="svelte-emoji-picker" bind:this={pickerEl}>
-      <EmojiSearch />
-      <div class="svelte-emoji-picker__emoji-tabs">
-        <Tabs> 
-          <TabList>
-            {#each categoryOrder as category}
-              <Tab><Icon icon={categoryIcons[category]} /></Tab>
-            {/each}
-          </TabList>
+      <EmojiSearch bind:searchText={searchText} />
+      {#if searchText}
+        <EmojiSearchResults searchText={searchText} on:emojihover={showEmojiDetails} on:emojiclick />
+      {:else}
+        <div class="svelte-emoji-picker__emoji-tabs">
+          <Tabs> 
+            <TabList>
+              {#each categoryOrder as category}
+                <Tab><Icon icon={categoryIcons[category]} /></Tab>
+              {/each}
+            </TabList>
 
-          {#each categoryOrder as category}
-            <TabPanel>
-              <EmojiList name={category} emojis={emojiCategories[category]} on:emojihover={showEmojiDetails} on:emojiclick />
-            </TabPanel>
-          {/each}
-        </Tabs>
-      </div>
+            {#each categoryOrder as category}
+              <TabPanel>
+                <EmojiList name={category} emojis={emojiCategories[category]} on:emojihover={showEmojiDetails} on:emojiclick />
+              </TabPanel>
+            {/each}
+          </Tabs>
+        </div>
+      {/if}
 
       <EmojiDetail emoji={currentEmoji} />
     </div>

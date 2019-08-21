@@ -1,6 +1,27 @@
 <script>
-  import { faSearch } from '@fortawesome/free-solid-svg-icons';
+  import { onMount } from 'svelte';
+
+  import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
   import Icon from 'fa-svelte';
+
+  export let searchText = '';
+
+  let searchField;
+
+  onMount(() => {
+    searchField.focus();
+  });
+
+  function clearSearchText() {
+    searchText = '';
+    searchField.focus();
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === 'Escape') {
+      clearSearchText();
+    }
+  }
 </script>
 
 <style>
@@ -23,12 +44,21 @@
     color: #AAAAAA;
     position: absolute;
     font-size: 1em;
-    top: calc(50% - 0.5em - 0.125em);
+    top: calc(50% - 0.5em);
     right: 0.75em;
+  }
+
+  .icon.clear-button {
+    cursor: pointer;
   }
 </style>
 
 <div class="svelte-emoji-picker__search">
-  <input type="text" placeholder="Search emojis...">
-  <span class="icon"><Icon icon={faSearch} /></span>
+  <input type="text" placeholder="Search emojis..." bind:value={searchText} bind:this={searchField} on:keydown={handleKeyDown}>
+  
+  {#if searchText}
+    <span class="icon clear-button" role="button" on:click|stopPropagation={clearSearchText}><Icon icon={faTimes} /></span>
+  {:else}
+    <span class="icon"><Icon icon={faSearch} /></span>
+  {/if}
 </div>
