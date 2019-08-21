@@ -46,8 +46,6 @@
     categoryList.push(emoji);
   });
 
-  console.log(emojiCategories);
-
   const categoryOrder = [
     'Smileys & People',
     'Animals & Nature',
