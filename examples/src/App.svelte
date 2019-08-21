@@ -1,5 +1,5 @@
 <script>
-	import EmojiPicker from 'svelte-emoji-picker';
+	import EmojiSelector from 'svelte-emoji-selector';
 
 	let textContent = '';
 
@@ -11,7 +11,7 @@
 <style>
 </style>
 
-<h1>Svelte Emoji Picker</h1>
+<h1>Svelte Emoji Selector</h1>
 
 <input bind:value={textContent} type="text">
-<EmojiPicker on:emoji={onEmoji} />
+<EmojiSelector on:emoji={onEmoji} />
