@@ -6,7 +6,7 @@
   const dispatch = createEventDispatcher();
 
   function onClick() {
-    dispatch('emojiclick', emoji.emoji);
+    dispatch('emojiclick', emoji);
   }
 
   function onMouseOver() {

@@ -1,5 +1,5 @@
 <script>
-  import { onMount, tick } from 'svelte';
+  import { createEventDispatcher, onMount, tick } from 'svelte';
 
   import { faBuilding, faFlag, faLightbulb, faSmile } from '@fortawesome/free-regular-svg-icons';
   import { faCat, faCoffee, faFutbol, faMusic } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +13,7 @@
   import EmojiList from './EmojiList.svelte';
   import EmojiSearch from './EmojiSearch.svelte';
   import EmojiSearchResults from './EmojiSearchResults.svelte';
+  import VariantPopup from './VariantPopup.svelte';
 
   import emojiData from './data/emoji.js';
 
@@ -22,10 +23,14 @@
   let pickerEl;
   let popper;
 
+  let variantsVisible = false;
   let pickerVisible = false;
 
+  let variants;
   let currentEmoji;
   let searchText;
+
+  const dispatch = createEventDispatcher();
 
   const emojiCategories = {};
   emojiData.forEach(emoji => {
@@ -61,17 +66,9 @@
     'Flags': faFlag
   };
 
-  function onClickOutside(event) {
-    const buttonParent = event.target.closest('.emoji-picker__trigger');
-    const pickerParent = event.target.closest('.emoji-picker');
-
-    if (!buttonParent && !pickerParent) {
-      pickerVisible = false;
-    }
-  }
-
-  function hidePicker() {
+  function hidePicker(event) {
     pickerVisible = false;
+    popper.destroy();
   }
 
   async function togglePicker() {
@@ -95,6 +92,32 @@
 
   function showEmojiDetails(event) {
     currentEmoji = event.detail;
+  }
+
+  function onEmojiClick(event) {
+    if (event.detail.variants) {
+      variants = event.detail.variants;
+      variantsVisible = true;
+    } else {
+      dispatch('emoji', event.detail.emoji);
+      hidePicker();
+    }
+  }
+
+  function onVariantClick(event) {
+    dispatch('emoji', event.detail.emoji);
+    hideVariants();
+    hidePicker();
+  }
+
+  function hideVariants() {
+    // We have to defer the removal of the variants popup.
+    // Otherwise, it gets removed before the click event on the body
+    // happens, and the target will have a `null` parent, which
+    // means it will not be excluded and the clickoutside event will fire.
+    setTimeout(() => {
+      variantsVisible = false;
+    });
   }
 </script>
 
@@ -138,7 +161,7 @@
     <div class="svelte-emoji-picker" bind:this={pickerEl} on:keydown={onKeyDown}>
       <EmojiSearch bind:searchText={searchText} />
       {#if searchText}
-        <EmojiSearchResults searchText={searchText} on:emojihover={showEmojiDetails} on:emojiclick />
+        <EmojiSearchResults searchText={searchText} on:emojihover={showEmojiDetails} on:emojiclick={onEmojiClick} />
       {:else}
         <div class="svelte-emoji-picker__emoji-tabs">
           <Tabs> 
@@ -150,11 +173,15 @@
 
             {#each categoryOrder as category}
               <TabPanel>
-                <EmojiList name={category} emojis={emojiCategories[category]} on:emojihover={showEmojiDetails} on:emojiclick />
+                <EmojiList name={category} emojis={emojiCategories[category]} on:emojihover={showEmojiDetails} on:emojiclick={onEmojiClick} />
               </TabPanel>
             {/each}
           </Tabs>
         </div>
+
+        {#if variantsVisible}
+          <VariantPopup variants={variants} on:emojiclick={onVariantClick} on:close={hideVariants} />
+        {/if}
       {/if}
 
       <EmojiDetail emoji={currentEmoji} />
