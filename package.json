@@ -5,7 +5,7 @@
   "module": "index.mjs",
   "main": "index.js",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Joe Attardi <jattardi@gmail.com> (https://joeattardi.codes)",
   "repository": {
     "type": "git",
