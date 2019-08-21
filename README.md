@@ -2,7 +2,7 @@
 
 Svelte component for picking emojis ⚡️
 
-![Screenshot](https://raw.githubusercontent.com/joeattardi/svelte-emoji-picker/master/screenshot.png | width=350)
+![Screenshot](https://raw.githubusercontent.com/joeattardi/svelte-emoji-picker/master/screenshot.png)
 
 ## Demo
 [https://joeattardi.github.io/svelte-emoji-picker/](https://joeattardi.github.io/svelte-emoji-picker/)
